@@ -1,33 +1,117 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Flow</title>
 
-  <div class="login-container">
-    <h1>Login</h1>
-    <form id="loginForm" novalidate>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com">
-        <span class="error-message" id="emailError"></span>
-      </div>
+    <link rel="stylesheet" href="style.css">
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="••••••••">
-        <span class="error-message" id="passwordError"></span>
-      </div>
+    </head>
+<header> 
+     <nav> 
+        <div href="index.html" class="logo"  > 
+            TaskFlow 
+        </div>
+         <div class="nav-links">
+             <a href="#features">Features</a> 
+             <a href="#about">About</a> 
+             <a href="login/index.html">Login</a> 
+            </div> 
+        </nav> 
+    </header>
 
-      <button type="submit">Log In</button>
-      <p class="status-message" id="statusMessage"></p>
-    </form>
-  </div>
+    <main>
 
-  <script src="script.js"></script>
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Get things done. Stay organized.</h1>
+
+            <p>
+                Organize your tasks, focus on what matters,
+                and get more done every day.
+            </p>
+
+            <a href="login/index.html" class="btn"> 
+                Get Started
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section id="features" class="features">
+
+        <h2>Everything you need to stay organized</h2>
+
+        <div class="feature-container">
+
+            <div class="feature">
+                <h3>Create Tasks</h3>
+
+                <p>
+                    Quickly add tasks and keep track of what
+                    needs to be done.
+                </p>
+            </div>
+
+
+            <div class="feature">
+                <h3>Track Progress</h3>
+
+                <p>
+                    Mark tasks as complete and see your progress
+                    as you work.
+                </p>
+            </div>
+
+
+            <div class="feature">
+                <h3>Stay Focused</h3>
+
+                <p>
+                    Keep everything organized in one simple place.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="about" class="about">
+
+        <h2>About TaskFlow</h2>
+
+        <p>
+            TaskFlow is a simple task-management application
+            designed to help you organize your daily activities
+            and stay productive.
+        </p>
+
+        <a href="login/index.html" class="btn">
+            Managing your tasks today
+        </a>
+    </section>
+
+</main>
+
+
+<!-- <footer>
+
+    <p>
+        &copy; 2026 TaskFlow. All rights reserved.
+    </p>
+
+</footer> -->
+
+
+<script src="script.js"></script>
+
 </body>
+
+
 </html>
