@@ -1,73 +1,196 @@
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+/* =========================
+   Global
+   ========================= */
 
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  padding-right: 6rem;
-  background: linear-gradient(to right, #1e3a8a, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+
+    background-color: #181818;
+    color: #FFFFFF;
 }
+
+
+/* =========================
+   Login Container
+   ========================= */
 
 .login-container {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: 320px;
+    width: 100%;
+    max-width: 400px;
+
+    padding: 40px;
+
+    background-color: #222222;
+
+    border: 1px solid #333333;
+    border-radius: 10px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
+
+/* =========================
+   Heading
+   ========================= */
+
+.login-container h1 {
+    margin: 0 0 30px;
+
+    text-align: center;
+
+    font-size: 32px;
+    color: #FFFFFF;
+}
+
+
+/* =========================
+   Form
+   ========================= */
+
 .form-group {
-  margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
 label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-weight: bold;
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+    color: #FFFFFF;
 }
 
 input {
-  width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background-color: #181818;
+    color: #FFFFFF;
+
+    border: 1px solid #444444;
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+input::placeholder {
+    color: #777777;
+}
+
+input:focus {
+    border-color: #F5C400;
+
+    box-shadow: 0 0 0 3px rgba(245, 196, 0, 0.12);
 }
 
 input.invalid {
-  border-color: #e74c3c;
+    border-color: #e74c3c;
 }
+
+
+/* =========================
+   Error Messages
+   ========================= */
 
 .error-message {
-  color: #e74c3c;
-  font-size: 0.85rem;
-  display: block;
-  min-height: 1em;
+    display: block;
+
+    min-height: 1em;
+
+    margin-top: 6px;
+
+    color: #e74c3c;
+
+    font-size: 14px;
 }
 
+
+/* =========================
+   Login Button
+   ========================= */
+
 button {
-  width: 100%;
-  padding: 0.7rem;
-  background: #4361ee;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    width: 100%;
+
+    padding: 14px;
+
+    background-color: #F5C400;
+    color: #111111;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 button:hover {
-  background: #3a0ca3;
+    background-color: #FFD21F;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(245, 196, 0, 0.25);
 }
+
+
+/* =========================
+   Status Message
+   ========================= */
 
 .status-message {
-  text-align: center;
-  margin-top: 1rem;
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: #B3B3B3;
 }
 
-.status-message.success { color: #2ecc71; }
-.status-message.error { color: #e74c3c; }
+.status-message.success {
+    color: #2ecc71;
+}
+
+.status-message.error {
+    color: #e74c3c;
+}
+
+
+/* =========================
+   Responsive Design
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .login-container {
+        padding: 30px 24px;
+    }
+
+    .login-container h1 {
+        font-size: 28px;
+    }
+
+}
