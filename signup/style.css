@@ -1,0 +1,252 @@
+/* =========================
+   Global
+   ========================= */
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+
+    background-color: #181818;
+    color: #FFFFFF;
+}
+
+
+/* =========================
+   Sign Up Container
+   ========================= */
+
+.signup-container {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 40px;
+
+    background-color: #222222;
+
+    border: 1px solid #333333;
+    border-radius: 10px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================
+   Header
+   ========================= */
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    display: inline-block;
+
+    margin-bottom: 25px;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    color: #F5C400;
+
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #FFD21F;
+}
+
+.signup-header h1 {
+    margin: 0 0 10px;
+
+    font-size: 30px;
+    color: #FFFFFF;
+}
+
+.signup-header p {
+    margin: 0;
+
+    color: #B3B3B3;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   Form
+   ========================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background-color: #181818;
+    color: #FFFFFF;
+
+    border: 1px solid #444444;
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+input::placeholder {
+    color: #777777;
+}
+
+input:focus {
+    border-color: #F5C400;
+
+    box-shadow: 0 0 0 3px rgba(245, 196, 0, 0.12);
+}
+
+input.invalid {
+    border-color: #e74c3c;
+}
+
+
+/* =========================
+   Error Messages
+   ========================= */
+
+.error-message {
+    display: block;
+
+    min-height: 1em;
+
+    margin-top: 6px;
+
+    color: #e74c3c;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   Button
+   ========================= */
+
+button {
+    width: 100%;
+
+    padding: 14px;
+
+    background-color: #F5C400;
+    color: #111111;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: #FFD21F;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(245, 196, 0, 0.25);
+}
+
+
+/* =========================
+   Status Message
+   ========================= */
+
+.status-message {
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: #B3B3B3;
+}
+
+.status-message.success {
+    color: #2ecc71;
+}
+
+.status-message.error {
+    color: #e74c3c;
+}
+
+
+/* =========================
+   Login Link
+   ========================= */
+
+.login-link {
+    margin: 25px 0 0;
+
+    text-align: center;
+
+    color: #B3B3B3;
+}
+
+.login-link a {
+    color: #F5C400;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #FFD21F;
+}
+
+
+/* =========================
+   Responsive Design
+   ========================= */
+
+@media (max-width: 480px) {
+
+    .signup-container {
+        padding: 30px 24px;
+    }
+
+    .signup-header h1 {
+        font-size: 26px;
+    }
+
+}
