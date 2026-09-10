@@ -2,65 +2,99 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Dashboard - TaskFlow</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
+
 <body>
-
-    <!-- =========================
-         Mobile Header
-         ========================= -->
-
 
 
     <!-- =========================
          Sidebar
          ========================= -->
 
-    <aside class="sidebar" id="sidebar">
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
 
-        <a href="../index.html" class="logo">
+        <a
+            href="../index.html"
+            class="logo"
+        >
             TaskFlow
         </a>
 
 
-        <!-- Main Navigation -->
-
         <nav class="sidebar-nav">
 
-            <a href="#" class="nav-item active" id="dashboardNav">
+            <a
+                href="#"
+                class="nav-item active"
+                id="dashboardNav"
+            >
                 Dashboard
             </a>
 
-            <a href="#"class="nav-item" id="allTasksNav">
+
+            <a
+                href="#"
+                class="nav-item"
+                id="allTasksNav"
+            >
                 All Tasks
             </a>
 
-            <a href="#" class="nav-item" id="completedNav">
+
+            <a
+                href="#"
+                class="nav-item"
+                id="completedNav"
+            >
                 Completed
             </a>
 
-            <a href="#" class="nav-item" id="categoriesNav">
+
+            <a
+                href="#"
+                class="nav-item"
+                id="categoriesNav"
+            >
                 Categories
             </a>
 
         </nav>
 
 
-        <!-- Bottom Navigation -->
-
         <div class="sidebar-bottom">
 
-            <a href="#" class="nav-item">
+            <a
+                href="#"
+                class="nav-item"
+            >
                 Settings
             </a>
 
-            <a href="../index.html" class="nav-item">
+
+            <a
+                href="#"
+                class="nav-item"
+                id="logoutBtn"
+            >
                 Logout
             </a>
 
@@ -69,12 +103,6 @@
     </aside>
 
 
-    <!-- =========================
-         Sidebar Overlay
-         ========================= -->
-
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
 
     <!-- =========================
          Main Dashboard
@@ -82,13 +110,20 @@
 
     <main class="dashboard">
 
+
         <!-- Dashboard Header -->
 
         <section class="dashboard-header">
 
             <div>
 
-                <h1>My Tasks</h1>
+                <span class="page-label">
+                    TASK MANAGEMENT
+                </span>
+
+                <h1>
+                    My Tasks
+                </h1>
 
                 <p>
                     Organize your work and stay on top of your day.
@@ -96,22 +131,35 @@
 
             </div>
 
-            <button class="add-task-btn" id="addTaskBtn">
+
+            <button
+                type="button"
+                class="add-task-btn"
+                id="addTaskBtn"
+            >
                 + Add Task
             </button>
 
         </section>
 
 
+
         <!-- =========================
-             Task Status
+             Task Summary
              ========================= -->
 
         <section class="task-summary">
 
+
             <div class="summary-card">
 
-                <h3>Total Tasks</h3>
+                <div class="summary-card-top">
+
+                    <span>
+                        Total Tasks
+                    </span>
+
+                </div>
 
                 <p id="totalTasks">
                     0
@@ -120,9 +168,16 @@
             </div>
 
 
+
             <div class="summary-card">
 
-                <h3>Completed Tasks</h3>
+                <div class="summary-card-top">
+
+                    <span>
+                        Completed
+                    </span>
+
+                </div>
 
                 <p id="completedTasks">
                     0
@@ -131,9 +186,16 @@
             </div>
 
 
+
             <div class="summary-card">
 
-                <h3>Pending Tasks</h3>
+                <div class="summary-card-top">
+
+                    <span>
+                        Pending
+                    </span>
+
+                </div>
 
                 <p id="pendingTasks">
                     0
@@ -141,7 +203,9 @@
 
             </div>
 
+
         </section>
+
 
 
         <!-- =========================
@@ -150,13 +214,16 @@
 
         <section class="task-section">
 
+
             <div class="section-header">
 
                 <div>
 
-                    <h2>Tasks</h2>
+                    <h2 id="taskSectionTitle">
+                        Tasks
+                    </h2>
 
-                    <p>
+                    <p id="taskSectionDescription">
                         Your current tasks
                     </p>
 
@@ -165,78 +232,66 @@
             </div>
 
 
-            <div class="task-list" id="taskList">
 
-                <!--
-                    Tasks will be created here
-                    using JavaScript.
-                -->
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        +
-                    </div>
-
-                    <h3>No tasks yet</h3>
-
-                    <p>
-                        Create your first task
-                        and start organizing your work.
-                    </p>
-
-                </div>
+            <div
+                class="task-list"
+                id="taskList"
+            >
 
             </div>
 
+
         </section>
 
+
     </main>
+
 
 
     <!-- =========================
          Task Details
          ========================= -->
 
-    <aside class="task-details" id="taskDetails">
-
-        <div class="empty-details">
-
-            <div class="details-icon">
-                ✓
-            </div>
-
-            <h2>Select a task</h2>
-
-            <p>
-                Select a task from the list
-                to view its details.
-            </p>
-
-        </div>
+    <aside
+        class="task-details"
+        id="taskDetails"
+    >
 
     </aside>
 
 
+
     <!-- =========================
-         Add Task Modal
+         Add / Edit Task Modal
          ========================= -->
 
-    <div class="modal" id="taskModal">
+    <div
+        class="modal"
+        id="taskModal"
+    >
+
 
         <div class="modal-content">
+
 
             <div class="modal-header">
 
                 <div>
 
-                    <h2>Add Task</h2>
+                    <span class="modal-label">
+                        TASK
+                    </span>
 
-                    <p>
+                    <h2 id="modalTitle">
+                        Add Task
+                    </h2>
+
+                    <p id="modalDescription">
                         Create a new task.
                     </p>
 
                 </div>
+
 
                 <button
                     type="button"
@@ -249,11 +304,9 @@
             </div>
 
 
-            <!-- Task Form -->
 
             <form id="taskForm">
 
-                <!-- Title -->
 
                 <div class="form-group">
 
@@ -271,7 +324,6 @@
                 </div>
 
 
-                <!-- Description -->
 
                 <div class="form-group">
 
@@ -288,7 +340,6 @@
                 </div>
 
 
-                <!-- Category -->
 
                 <div class="form-group">
 
@@ -330,7 +381,6 @@
                 </div>
 
 
-                <!-- Due Date -->
 
                 <div class="form-group">
 
@@ -347,20 +397,24 @@
                 </div>
 
 
-                <!-- Save -->
 
                 <button
                     type="submit"
                     class="save-task-btn"
+                    id="saveTaskBtn"
                 >
                     Save Task
                 </button>
 
+
             </form>
+
 
         </div>
 
+
     </div>
+
 
 
     <script src="script.js"></script>

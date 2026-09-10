@@ -54,6 +54,9 @@ const taskForm =
 const taskList =
     document.querySelector('#taskList');
 
+const taskDetails =
+    document.querySelector('#taskDetails');
+
 const taskTitle =
     document.querySelector('#taskTitle');
 
@@ -75,12 +78,27 @@ const completedTasks =
 const pendingTasks =
     document.querySelector('#pendingTasks');
 
-const taskDetails =
-    document.querySelector('#taskDetails');
+const taskSectionTitle =
+    document.querySelector('#taskSectionTitle');
+
+const taskSectionDescription =
+    document.querySelector('#taskSectionDescription');
+
+const modalTitle =
+    document.querySelector('#modalTitle');
+
+const modalDescription =
+    document.querySelector('#modalDescription');
+
+const saveTaskButton =
+    document.querySelector('#saveTaskBtn');
+
+const logoutButton =
+    document.querySelector('#logoutBtn');
 
 
 // =========================
-// Sidebar
+// Sidebar Navigation
 // =========================
 
 const dashboardNav =
@@ -97,7 +115,7 @@ const categoriesNav =
 
 
 // =========================
-// Load User's Tasks
+// Load User Tasks
 // =========================
 
 function loadTasks() {
@@ -107,22 +125,24 @@ function loadTasks() {
     ) || {};
 
 
-    tasks = savedTasks[currentUser.email] || [];
+    tasks =
+        savedTasks[currentUser.email] || [];
 
 
-    // Convert saved dates back into Date objects
+    tasks.forEach(
+        function (task) {
 
-    tasks.forEach(function (task) {
+            task.createdAt =
+                new Date(task.createdAt);
 
-        task.createdAt = new Date(task.createdAt);
-
-    });
+        }
+    );
 
 }
 
 
 // =========================
-// Save User's Tasks
+// Save User Tasks
 // =========================
 
 function saveTasks() {
@@ -132,7 +152,8 @@ function saveTasks() {
     ) || {};
 
 
-    savedTasks[currentUser.email] = tasks;
+    savedTasks[currentUser.email] =
+        tasks;
 
 
     localStorage.setItem(
@@ -155,7 +176,20 @@ addTaskButton.addEventListener(
 
         delete taskForm.dataset.editingId;
 
-        taskModal.style.display = 'flex';
+
+        modalTitle.textContent =
+            'Add Task';
+
+        modalDescription.textContent =
+            'Create a new task.';
+
+        saveTaskButton.textContent =
+            'Save Task';
+
+
+        taskModal.style.display =
+            'flex';
+
 
         taskTitle.focus();
 
@@ -167,15 +201,28 @@ addTaskButton.addEventListener(
 // Close Modal
 // =========================
 
+function closeTaskModal() {
+
+    taskModal.style.display =
+        'none';
+
+
+    taskForm.reset();
+
+    delete taskForm.dataset.editingId;
+
+}
+
+
+// =========================
+// Close Modal Button
+// =========================
+
 closeModalButton.addEventListener(
     'click',
     function () {
 
-        taskModal.style.display = 'none';
-
-        taskForm.reset();
-
-        delete taskForm.dataset.editingId;
+        closeTaskModal();
 
     }
 );
@@ -191,11 +238,7 @@ taskModal.addEventListener(
 
         if (event.target === taskModal) {
 
-            taskModal.style.display = 'none';
-
-            taskForm.reset();
-
-            delete taskForm.dataset.editingId;
+            closeTaskModal();
 
         }
 
@@ -213,9 +256,14 @@ dashboardNav.addEventListener(
 
         event.preventDefault();
 
-        currentView = 'dashboard';
+        currentView =
+            'dashboard';
 
-        updateActiveNav(dashboardNav);
+        updateActiveNav(
+            dashboardNav
+        );
+
+        updateSectionText();
 
         renderTasks();
 
@@ -229,9 +277,14 @@ allTasksNav.addEventListener(
 
         event.preventDefault();
 
-        currentView = 'all';
+        currentView =
+            'all';
 
-        updateActiveNav(allTasksNav);
+        updateActiveNav(
+            allTasksNav
+        );
+
+        updateSectionText();
 
         renderTasks();
 
@@ -245,9 +298,14 @@ completedNav.addEventListener(
 
         event.preventDefault();
 
-        currentView = 'completed';
+        currentView =
+            'completed';
 
-        updateActiveNav(completedNav);
+        updateActiveNav(
+            completedNav
+        );
+
+        updateSectionText();
 
         renderTasks();
 
@@ -261,9 +319,14 @@ categoriesNav.addEventListener(
 
         event.preventDefault();
 
-        currentView = 'categories';
+        currentView =
+            'categories';
 
-        updateActiveNav(categoriesNav);
+        updateActiveNav(
+            categoriesNav
+        );
+
+        updateSectionText();
 
         renderTasks();
 
@@ -277,15 +340,84 @@ categoriesNav.addEventListener(
 
 function updateActiveNav(activeNav) {
 
-    dashboardNav.classList.remove('active');
+    dashboardNav.classList.remove(
+        'active'
+    );
 
-    allTasksNav.classList.remove('active');
+    allTasksNav.classList.remove(
+        'active'
+    );
 
-    completedNav.classList.remove('active');
+    completedNav.classList.remove(
+        'active'
+    );
 
-    categoriesNav.classList.remove('active');
+    categoriesNav.classList.remove(
+        'active'
+    );
 
-    activeNav.classList.add('active');
+
+    activeNav.classList.add(
+        'active'
+    );
+
+}
+
+
+// =========================
+// Section Text
+// =========================
+
+function updateSectionText() {
+
+    if (currentView === 'dashboard') {
+
+        taskSectionTitle.textContent =
+            'Tasks';
+
+        taskSectionDescription.textContent =
+            'Your current tasks';
+
+        return;
+
+    }
+
+
+    if (currentView === 'all') {
+
+        taskSectionTitle.textContent =
+            'All Tasks';
+
+        taskSectionDescription.textContent =
+            'Every task in your workspace';
+
+        return;
+
+    }
+
+
+    if (currentView === 'completed') {
+
+        taskSectionTitle.textContent =
+            'Completed';
+
+        taskSectionDescription.textContent =
+            'Tasks you have completed';
+
+        return;
+
+    }
+
+
+    if (currentView === 'categories') {
+
+        taskSectionTitle.textContent =
+            'Categories';
+
+        taskSectionDescription.textContent =
+            'Organize tasks by category';
+
+    }
 
 }
 
@@ -329,18 +461,20 @@ taskForm.addEventListener(
 
         if (taskForm.dataset.editingId) {
 
-            const taskId = Number(
-                taskForm.dataset.editingId
-            );
+            const taskId =
+                Number(
+                    taskForm.dataset.editingId
+                );
 
 
-            const task = tasks.find(
-                function (task) {
+            const task =
+                tasks.find(
+                    function (task) {
 
-                    return task.id === taskId;
+                        return task.id === taskId;
 
-                }
-            );
+                    }
+                );
 
 
             if (!task) {
@@ -350,27 +484,26 @@ taskForm.addEventListener(
             }
 
 
-            task.title = title;
+            task.title =
+                title;
 
-            task.description = description;
+            task.description =
+                description;
 
-            task.category = category;
+            task.category =
+                category;
 
-            task.dueDate = dueDate;
-
-
-            selectedTaskId = taskId;
-
-
-            delete taskForm.dataset.editingId;
+            task.dueDate =
+                dueDate;
 
 
-            taskForm.reset();
-
-            taskModal.style.display = 'none';
+            selectedTaskId =
+                taskId;
 
 
             saveTasks();
+
+            closeTaskModal();
 
             renderTasks();
 
@@ -407,24 +540,26 @@ taskForm.addEventListener(
         };
 
 
-        tasks.unshift(newTask);
+        tasks.unshift(
+            newTask
+        );
 
 
-        selectedTaskId = newTask.id;
-
-
-        taskForm.reset();
-
-        taskModal.style.display = 'none';
+        selectedTaskId =
+            newTask.id;
 
 
         saveTasks();
+
+        closeTaskModal();
 
         renderTasks();
 
         updateTaskSummary();
 
-        showTaskDetails(newTask);
+        showTaskDetails(
+            newTask
+        );
 
     }
 );
@@ -439,42 +574,38 @@ function renderTasks() {
     let tasksToDisplay = [];
 
 
-    // Dashboard
+    if (
+        currentView === 'dashboard' ||
+        currentView === 'all'
+    ) {
 
-    if (currentView === 'dashboard') {
-
-        tasksToDisplay = [...tasks];
-
-    }
-
-
-    // All Tasks
-
-    else if (currentView === 'all') {
-
-        tasksToDisplay = [...tasks];
+        tasksToDisplay =
+            [...tasks];
 
     }
 
 
-    // Completed
+    else if (
+        currentView === 'completed'
+    ) {
 
-    else if (currentView === 'completed') {
+        tasksToDisplay =
+            tasks.filter(
+                function (task) {
 
-        tasksToDisplay = tasks.filter(
-            function (task) {
+                    return (
+                        task.completed === true
+                    );
 
-                return task.completed === true;
-
-            }
-        );
+                }
+            );
 
     }
 
 
-    // Categories
-
-    else if (currentView === 'categories') {
+    else if (
+        currentView === 'categories'
+    ) {
 
         renderCategories();
 
@@ -483,7 +614,9 @@ function renderTasks() {
     }
 
 
-    if (tasksToDisplay.length === 0) {
+    if (
+        tasksToDisplay.length === 0
+    ) {
 
         showEmptyTaskList();
 
@@ -492,25 +625,25 @@ function renderTasks() {
     }
 
 
-    // Pending first
-
     const incompleteTasks =
         tasksToDisplay.filter(
             function (task) {
 
-                return task.completed === false;
+                return (
+                    task.completed === false
+                );
 
             }
         );
 
 
-    // Completed second
-
     const completedTaskList =
         tasksToDisplay.filter(
             function (task) {
 
-                return task.completed === true;
+                return (
+                    task.completed === true
+                );
 
             }
         );
@@ -526,34 +659,20 @@ function renderTasks() {
 
 
     taskList.innerHTML =
-        sortedTasks.map(
-            function (task) {
+        sortedTasks
+            .map(
+                function (task) {
 
-                return createTaskCard(task);
+                    return createTaskCard(
+                        task
+                    );
 
-            }
-        ).join('');
-
-
-    // Restore selected task
-
-    if (selectedTaskId !== null) {
-
-        const selectedCard =
-            document.querySelector(
-                `.task-card[data-task-id="${selectedTaskId}"]`
-            );
+                }
+            )
+            .join('');
 
 
-        if (selectedCard) {
-
-            selectedCard.classList.add(
-                'selected'
-            );
-
-        }
-
-    }
+    highlightSelectedTask();
 
 }
 
@@ -623,13 +742,15 @@ function createTaskCard(task) {
                     <div class="task-meta">
 
                         <span>
-                            📁
-                            ${escapeHTML(categoryText)}
+                            ${escapeHTML(
+                                formatCategoryName(
+                                    categoryText
+                                )
+                            )}
                         </span>
 
 
                         <span>
-                            📅
                             ${dueDateText}
                         </span>
 
@@ -734,11 +855,29 @@ function selectTask(taskId) {
     }
 
 
-    selectedTaskId = taskId;
+    selectedTaskId =
+        taskId;
 
+
+    highlightSelectedTask();
+
+    showTaskDetails(
+        task
+    );
+
+}
+
+
+// =========================
+// Highlight Selected Task
+// =========================
+
+function highlightSelectedTask() {
 
     document
-        .querySelectorAll('.task-card')
+        .querySelectorAll(
+            '.task-card'
+        )
         .forEach(
             function (card) {
 
@@ -750,9 +889,18 @@ function selectTask(taskId) {
         );
 
 
+    if (
+        selectedTaskId === null
+    ) {
+
+        return;
+
+    }
+
+
     const selectedCard =
         document.querySelector(
-            `.task-card[data-task-id="${taskId}"]`
+            `.task-card[data-task-id="${selectedTaskId}"]`
         );
 
 
@@ -764,15 +912,12 @@ function selectTask(taskId) {
 
     }
 
-
-    showTaskDetails(task);
-
 }
 
 
-// =========================
-// Show Task Details
-// =========================
+// ==================================================
+// TASK DETAILS
+// ==================================================
 
 function showTaskDetails(task) {
 
@@ -784,13 +929,17 @@ function showTaskDetails(task) {
 
     const categoryText =
         task.category
-            ? task.category
+            ? formatCategoryName(
+                task.category
+            )
             : 'No category';
 
 
     const dueDateText =
         task.dueDate
-            ? formatDate(task.dueDate)
+            ? formatDate(
+                task.dueDate
+            )
             : 'No due date';
 
 
@@ -798,10 +947,11 @@ function showTaskDetails(task) {
 
         <div class="task-details-content">
 
+
             <div class="details-header">
 
                 <span class="details-label">
-                    TASK DETAILS
+                    TASK
                 </span>
 
 
@@ -818,9 +968,11 @@ function showTaskDetails(task) {
             </div>
 
 
+
             <h2>
                 ${escapeHTML(task.title)}
             </h2>
+
 
 
             <div class="detail-group">
@@ -842,6 +994,7 @@ function showTaskDetails(task) {
             </div>
 
 
+
             <div class="detail-group">
 
                 <span class="detail-title">
@@ -850,10 +1003,28 @@ function showTaskDetails(task) {
 
 
                 <p>
-                    ${escapeHTML(categoryText)}
+                    ${escapeHTML(
+                        categoryText
+                    )}
                 </p>
 
             </div>
+
+
+
+            <div class="detail-group">
+
+                <span class="detail-title">
+                    Due date
+                </span>
+
+
+                <p>
+                    ${dueDateText}
+                </p>
+
+            </div>
+
 
 
             <div class="detail-group">
@@ -871,19 +1042,6 @@ function showTaskDetails(task) {
 
             </div>
 
-
-            <div class="detail-group">
-
-                <span class="detail-title">
-                    Due date
-                </span>
-
-
-                <p>
-                    ${dueDateText}
-                </p>
-
-            </div>
 
 
             <div class="details-actions">
@@ -906,6 +1064,7 @@ function showTaskDetails(task) {
                 </button>
 
             </div>
+
 
         </div>
 
@@ -1002,7 +1161,9 @@ function toggleTask(taskId) {
 
     updateTaskSummary();
 
-    showTaskDetails(task);
+    showTaskDetails(
+        task
+    );
 
 }
 
@@ -1033,11 +1194,14 @@ function editTask(taskId) {
     taskTitle.value =
         task.title;
 
+
     taskDescription.value =
         task.description;
 
+
     taskCategory.value =
         task.category;
+
 
     taskDueDate.value =
         task.dueDate;
@@ -1045,6 +1209,18 @@ function editTask(taskId) {
 
     taskForm.dataset.editingId =
         taskId;
+
+
+    modalTitle.textContent =
+        'Edit Task';
+
+
+    modalDescription.textContent =
+        'Update the details of your task.';
+
+
+    saveTaskButton.textContent =
+        'Update Task';
 
 
     taskModal.style.display =
@@ -1125,26 +1301,7 @@ function renderCategories() {
 
     if (tasks.length === 0) {
 
-        taskList.innerHTML = `
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    +
-                </div>
-
-                <h3>
-                    No categories yet
-                </h3>
-
-                <p>
-                    Create tasks with categories
-                    to see them here.
-                </p>
-
-            </div>
-
-        `;
+        showEmptyCategories();
 
         return;
 
@@ -1176,26 +1333,7 @@ function renderCategories() {
 
     if (categories.length === 0) {
 
-        taskList.innerHTML = `
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    +
-                </div>
-
-                <h3>
-                    No categories yet
-                </h3>
-
-                <p>
-                    Assign a category to your
-                    tasks to see categories here.
-                </p>
-
-            </div>
-
-        `;
+        showEmptyCategories();
 
         return;
 
@@ -1207,60 +1345,63 @@ function renderCategories() {
         <div class="category-list">
 
             ${
-                categories.map(
-                    function (category) {
+                categories
+                    .map(
+                        function (category) {
 
-                        const categoryTasks =
-                            tasks.filter(
-                                function (task) {
+                            const categoryTasks =
+                                tasks.filter(
+                                    function (task) {
 
-                                    return (
-                                        task.category ===
-                                        category
-                                    );
-
-                                }
-                            );
-
-
-                        return `
-
-                            <button
-                                type="button"
-                                class="category-card"
-                                data-category="${escapeHTML(category)}"
-                            >
-
-                                <span
-                                    class="category-name"
-                                >
-                                    ${escapeHTML(
-                                        formatCategoryName(
+                                        return (
+                                            task.category ===
                                             category
-                                        )
-                                    )}
-                                </span>
+                                        );
 
-
-                                <span
-                                    class="category-count"
-                                >
-                                    ${categoryTasks.length}
-
-                                    ${
-                                        categoryTasks.length === 1
-                                            ? 'task'
-                                            : 'tasks'
                                     }
+                                );
 
-                                </span>
 
-                            </button>
+                            return `
 
-                        `;
+                                <button
+                                    type="button"
+                                    class="category-card"
+                                    data-category="${escapeHTML(category)}"
+                                >
 
-                    }
-                ).join('')
+                                    <span class="category-name">
+
+                                        ${escapeHTML(
+                                            formatCategoryName(
+                                                category
+                                            )
+                                        )}
+
+                                    </span>
+
+
+                                    <span class="category-count">
+
+                                        ${
+                                            categoryTasks.length
+                                        }
+
+                                        ${
+                                            categoryTasks.length === 1
+                                                ? 'task'
+                                                : 'tasks'
+                                        }
+
+                                    </span>
+
+                                </button>
+
+                            `;
+
+                        }
+                    )
+                    .join('')
             }
 
         </div>
@@ -1295,7 +1436,9 @@ taskList.addEventListener(
             categoryCard.dataset.category;
 
 
-        showCategoryTasks(category);
+        showCategoryTasks(
+            category
+        );
 
     }
 );
@@ -1324,7 +1467,9 @@ function showCategoryTasks(category) {
         categoryTasks.filter(
             function (task) {
 
-                return task.completed === false;
+                return (
+                    task.completed === false
+                );
 
             }
         );
@@ -1334,7 +1479,9 @@ function showCategoryTasks(category) {
         categoryTasks.filter(
             function (task) {
 
-                return task.completed === true;
+                return (
+                    task.completed === true
+                );
 
             }
         );
@@ -1351,11 +1498,13 @@ function showCategoryTasks(category) {
 
     taskList.innerHTML = `
 
-        <div class="section-header">
+        <div class="category-view-header">
 
             <h3>
                 ${escapeHTML(
-                    formatCategoryName(category)
+                    formatCategoryName(
+                        category
+                    )
                 )}
             </h3>
 
@@ -1365,13 +1514,17 @@ function showCategoryTasks(category) {
         ${
             sortedTasks.length > 0
 
-                ? sortedTasks.map(
-                    function (task) {
+                ? sortedTasks
+                    .map(
+                        function (task) {
 
-                        return createTaskCard(task);
+                            return createTaskCard(
+                                task
+                            );
 
-                    }
-                ).join('')
+                        }
+                    )
+                    .join('')
 
                 : `
 
@@ -1389,23 +1542,39 @@ function showCategoryTasks(category) {
     `;
 
 
-    if (selectedTaskId !== null) {
+    highlightSelectedTask();
 
-        const selectedCard =
-            document.querySelector(
-                `.task-card[data-task-id="${selectedTaskId}"]`
-            );
+}
 
 
-        if (selectedCard) {
+// =========================
+// Empty Categories
+// =========================
 
-            selectedCard.classList.add(
-                'selected'
-            );
+function showEmptyCategories() {
 
-        }
+    taskList.innerHTML = `
 
-    }
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                +
+            </div>
+
+
+            <h3>
+                No categories yet
+            </h3>
+
+
+            <p>
+                Assign categories to your
+                tasks to see them here.
+            </p>
+
+        </div>
+
+    `;
 
 }
 
@@ -1424,7 +1593,9 @@ function showEmptyTaskList() {
         'Create your first task and start organizing your work.';
 
 
-    if (currentView === 'completed') {
+    if (
+        currentView === 'completed'
+    ) {
 
         title =
             'No completed tasks';
@@ -1475,7 +1646,9 @@ function updateTaskSummary() {
         tasks.filter(
             function (task) {
 
-                return task.completed === true;
+                return (
+                    task.completed === true
+                );
 
             }
         ).length;
@@ -1488,8 +1661,10 @@ function updateTaskSummary() {
     totalTasks.textContent =
         total;
 
+
     completedTasks.textContent =
         completed;
+
 
     pendingTasks.textContent =
         pending;
@@ -1580,7 +1755,9 @@ function formatCategoryName(category) {
 function escapeHTML(value) {
 
     const div =
-        document.createElement('div');
+        document.createElement(
+            'div'
+        );
 
 
     div.textContent =
@@ -1592,36 +1769,53 @@ function escapeHTML(value) {
 }
 
 
-// =========================
-// Empty Details
-// =========================
+// ==================================================
+// Empty Task Details
+// ==================================================
 
 function showEmptyDetails() {
 
-    taskDetails.innerHTML = `
-
-        <div class="empty-details">
-
-            <div class="details-icon">
-                ✓
-            </div>
-
-
-            <h2>
-                Select a task
-            </h2>
-
-
-            <p>
-                Select a task from the list
-                to view its details.
-            </p>
-
-        </div>
-
-    `;
+    taskDetails.innerHTML = '';
 
 }
+
+
+// ==================================================
+// Logout
+// ==================================================
+
+logoutButton.addEventListener(
+    'click',
+    function (event) {
+
+        event.preventDefault();
+
+
+        logoutButton.textContent =
+            'Logging out...';
+
+
+        logoutButton.style.color =
+            '#F5C400';
+
+
+        setTimeout(
+            function () {
+
+                localStorage.removeItem(
+                    'taskflowCurrentUser'
+                );
+
+
+                window.location.href =
+                    '../login/index.html';
+
+            },
+            3000
+        );
+
+    }
+);
 
 
 // =========================
@@ -1635,3 +1829,5 @@ renderTasks();
 updateTaskSummary();
 
 showEmptyDetails();
+
+updateSectionText();
